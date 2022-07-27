@@ -8,19 +8,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/signup","/login").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+    protected void configure(HttpSecurity http)throws Exception{
+        http.csrf().disable();
     }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/","/signup").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll()
+//                .and()
+//                .httpBasic();
+//    }
 }
