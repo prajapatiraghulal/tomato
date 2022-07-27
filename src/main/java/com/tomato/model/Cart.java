@@ -8,14 +8,14 @@ import java.util.List;
 @Document(collection = "cart")
 public class Cart {
     @Id
-    private String userId;
+    private long userId;
     private List<CartItem> cartItems;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

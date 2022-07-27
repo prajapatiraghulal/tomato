@@ -1,7 +1,10 @@
 package com.tomato.repository;
 
+import com.tomato.model.Order;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository {
+public interface OrderRepository extends MongoRepository<Order,String> {
+    public Order findByOrderId(String orderId);
 }

@@ -37,7 +37,7 @@ public class UserController {
             return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping(value = "/signup", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/signup",consumes ="application/json",produces = "application/json")
     public SignupResponse signup(@RequestBody User user){
         SignupResponse signupResponse = userService.register(user);
         return signupResponse;

@@ -4,23 +4,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class CartRequest {
-    private String userId;
-    private String itemId;
+    private long userId;
+    private long itemId;
     private int quantity;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 
