@@ -42,10 +42,13 @@ public class UserService {
     }
     public SignupResponse register(User user){
 
-        User currentUser = userRepository.findByEmail(user.getEmail());
-        User newUser = null;
         SignupResponse signupResponse = new SignupResponse();
+        if(user.getUserType()==2){
+            signupResponse.setStatus(false);
+            signupResponse.setMessage("Cannot register as Admin");
+        }
 
+        User currentUser = userRepository.findByEmail(user.getEmail());
         if(currentUser!=null)
         {
             signupResponse.setStatus(false);
@@ -56,6 +59,7 @@ public class UserService {
             String hashedPassword = BCrypt.hashpw(user.getPassword()+pepper,salt);
             user.setPassword(hashedPassword);
             user.setSalt(salt);
+            user.setWalletAmount((long)(1000* Math.random()));
             userRepository.save(user);
             signupResponse.setMessage("Signup successful");
             signupResponse.setStatus(true);
