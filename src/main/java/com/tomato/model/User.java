@@ -7,8 +7,8 @@ import javax.persistence.*;
 @Entity
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long userId;
 
     @Column
     @NotNull
@@ -37,11 +37,11 @@ public class User{
     @NotNull
     private long walletAmount;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
