@@ -4,5 +4,9 @@ import com.tomato.model.Cart;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CartRepository extends MongoRepository<Cart, Long> {
+<<<<<<< Updated upstream
     Cart findById(long userId);
+=======
+    Cart findById(long id);
+>>>>>>> Stashed changes
 }
