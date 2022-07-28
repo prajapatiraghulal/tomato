@@ -26,7 +26,7 @@ public class HomeService {
         List<RestaurantHomeDetail> restaurantHomeDetails = new ArrayList<>();
         for(Restaurant restaurant : allRestaurants) {
             RestaurantHomeDetail restaurantHomeDetail = new RestaurantHomeDetail();
-           restaurantHomeDetail.setRestaurantId(restaurant.getRestaurantId());
+           restaurantHomeDetail.setRestaurantId(restaurant.getId());
            restaurantHomeDetail.setName(restaurant.getName());
            restaurantHomeDetail.setAddress(restaurant.getAddress());
            restaurantHomeDetail.setDescription(restaurant.getDescription());
