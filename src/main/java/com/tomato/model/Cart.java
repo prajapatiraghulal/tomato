@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 import java.util.List;
 
-@Document(collection = "cart")
+@Document(collection = "carts")
 public class Cart {
     @Id
     private long id;

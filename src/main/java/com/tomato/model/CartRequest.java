@@ -2,7 +2,6 @@ package com.tomato.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class CartRequest {
     private long userId;
     private long itemId;

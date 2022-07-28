@@ -2,10 +2,13 @@ package com.tomato.service;
 
 import com.tomato.model.*;
 import com.tomato.repository.LoginRepository;
+import com.tomato.repository.CartRepository;
 import com.tomato.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 
 @Service
 public class UserService {
@@ -13,6 +16,8 @@ public class UserService {
     String pepper = "tomato1234";
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CartRepository cartRepository;
 
     @Autowired
     LoginRepository loginRepository;
@@ -36,7 +41,7 @@ public class UserService {
             else
             {
                 loginResponse.setStatus(false);
-                loginResponse.setMessage("User not found");
+                loginResponse.setMessage("Incorrect password");
             }
         }
         return loginResponse;
@@ -61,8 +66,6 @@ public class UserService {
   
     public SignupResponse register(User user){
         SignupResponse signupResponse = new SignupResponse();
-        signupResponse.setMessage("something went wrong or invalid call");
-        signupResponse.setStatus(false);
         try  {
             if (user.getUserType() == 2) {
                 signupResponse.setStatus(false);
@@ -74,19 +77,43 @@ public class UserService {
                 signupResponse.setStatus(false);
                 signupResponse.setMessage("User already exists");
                 return signupResponse;
-            } else {
+            } else{
                 String salt = BCrypt.gensalt();
-                String hashedPassword = BCrypt.hashpw(user.getPassword() + pepper, salt);
+                String hashedPassword = BCrypt.hashpw(user.getPassword()+pepper,salt);
                 user.setPassword(hashedPassword);
                 user.setSalt(salt);
-                user.setWalletAmount((long) (1000 * Math.random()));
-                userRepository.save(user);
-                signupResponse.setMessage("Signup successful");
-                signupResponse.setStatus(true);
-                return signupResponse;
+                user.setWalletAmount((long)(1000* Math.random()));
+                Cart cart = new Cart();
+
+                User newUser = userRepository.save(user);
+                if(newUser != null){
+                    cart.setId(newUser.getUserId());
+                    cart.setCartItems(Collections.emptyList());
+                    Cart newCart = cartRepository.save(cart);
+                    if(newCart!=null){
+                        signupResponse.setMessage("Signup successful");
+                        signupResponse.setStatus(true);
+                        return signupResponse;
+                    }
+                    else{
+                        userRepository.delete(newUser);
+                        signupResponse.setMessage("Signup unsuccessful!!! Cart Not Created");
+                        signupResponse.setStatus(false);
+                        return signupResponse;
+                    }
+                }
+                else{
+                    signupResponse.setMessage("Signup unsuccessful!!! User Not Saved in DB");
+                    signupResponse.setStatus(false);
+                    return signupResponse;
+                }
             }
-        }catch(Exception e){
+        }
+        catch(Exception e){
+            signupResponse.setMessage("something went wrong or invalid call");
+            signupResponse.setStatus(false);
             return signupResponse;
         }
+
     }
 }

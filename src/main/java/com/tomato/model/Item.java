@@ -7,11 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Document(collection = "item")
+@Document(collection = "items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long itemId;
+    private long id;
     private String name;
     private String description;
     private long offer;
@@ -20,12 +20,12 @@ public class Item {
     private float price;
     private float rating;
 
-    public long getItemId() {
-        return itemId;
+    public long getId() {
+        return id;
     }
 
-    public void setItemId(long itemId) {
-        this.itemId = itemId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -26,10 +26,10 @@ public class OrderService {
         List<CartItem> cartItems=myCart.getCartItems();
         float totalPrice = (float)0.0;
         for(int i = 0; i < cartItems.size(); i++){
-            Item item=itemRepository.findByItemId(cartItems.get(i).getItemId());
+            Item item=itemRepository.findById(cartItems.get(i).getItemId());
             totalPrice+=item.getPrice();
         }
-        Item item=itemRepository.findByItemId(cartItems.get(0).getItemId());
+        Item item=itemRepository.findById(cartItems.get(0).getItemId());
         long restaurantId=item.getRestaurantId();
         Restaurant restaurant=restaurantRepository.findById(restaurantId);
 
