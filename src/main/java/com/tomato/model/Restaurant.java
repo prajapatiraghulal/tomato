@@ -9,7 +9,7 @@ import java.util.List;
 //@Entity
 public class Restaurant {
     @Id
-    private long restaurantId;
+    private long id;
     private String name;
     private int status;
     private String offer;
@@ -19,12 +19,12 @@ public class Restaurant {
    // @Transient
     private List<Long> itemIds;
 
-    public long getRestaurantId() {
-        return restaurantId;
+    public long getId() {
+        return id;
     }
 
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

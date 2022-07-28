@@ -6,6 +6,34 @@ public class PriceDetail {
     private float gst;
     private float deliveryCharge;
     private float totalPriceAfterGst;
+    private  long offer;
+    private String restaurantName;
+    private String userAddress;
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    public long getOffer() {
+        return offer;
+    }
+
+    public void setOffer(long offer) {
+        this.offer = offer;
+    }
+
 
     public long getUserId() {
         return userId;
@@ -46,4 +74,6 @@ public class PriceDetail {
     public void setTotalPriceAfterGst(float totalPriceAfterGst) {
         this.totalPriceAfterGst = totalPriceAfterGst;
     }
+
+
 }
