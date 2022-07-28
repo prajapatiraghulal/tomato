@@ -40,29 +40,34 @@ public class UserService {
         }
         return loginResponse;
     }
-    public SignupResponse register(User user){
+    public SignupResponse register(User user) {
 
         SignupResponse signupResponse = new SignupResponse();
-        if(user.getUserType()==2){
-            signupResponse.setStatus(false);
-            signupResponse.setMessage("Cannot register as Admin");
-        }
+        signupResponse.setMessage("something went wrong or invalid call");
+        signupResponse.setStatus(false);
+        try  {
+            if (user.getUserType() == 2) {
+                signupResponse.setStatus(false);
+                signupResponse.setMessage("Cannot register as Admin");
+            }
 
-        User currentUser = userRepository.findByEmail(user.getEmail());
-        if(currentUser!=null)
-        {
-            signupResponse.setStatus(false);
-            signupResponse.setMessage("User already exists");
-            return signupResponse;
-        }else{
-            String salt = BCrypt.gensalt();
-            String hashedPassword = BCrypt.hashpw(user.getPassword()+pepper,salt);
-            user.setPassword(hashedPassword);
-            user.setSalt(salt);
-            user.setWalletAmount((long)(1000* Math.random()));
-            userRepository.save(user);
-            signupResponse.setMessage("Signup successful");
-            signupResponse.setStatus(true);
+            User currentUser = userRepository.findByEmail(user.getEmail());
+            if (currentUser != null) {
+                signupResponse.setStatus(false);
+                signupResponse.setMessage("User already exists");
+                return signupResponse;
+            } else {
+                String salt = BCrypt.gensalt();
+                String hashedPassword = BCrypt.hashpw(user.getPassword() + pepper, salt);
+                user.setPassword(hashedPassword);
+                user.setSalt(salt);
+                user.setWalletAmount((long) (1000 * Math.random()));
+                userRepository.save(user);
+                signupResponse.setMessage("Signup successful");
+                signupResponse.setStatus(true);
+                return signupResponse;
+            }
+        }catch(Exception e){
             return signupResponse;
         }
     }
