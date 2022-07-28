@@ -1,17 +1,17 @@
 package com.tomato.model;
 
 public class PriceDetail {
-    private String userId;
+    private long userId;
     private float totalPrice;
     private float gst;
     private float deliveryCharge;
     private float totalPriceAfterGst;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

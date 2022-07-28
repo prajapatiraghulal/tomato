@@ -1,18 +1,18 @@
 package com.tomato.model;
 
 public class RestaurantHomeDetail {
-    private String restaurantId;
+    private long restaurantId;
     private String name;
     private String address;
     private int status;
     private String description;
     private String imageUrl;
 
-    public String getRestaurantId() {
+    public long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(long restaurantId) {
         this.restaurantId = restaurantId;
     }
 

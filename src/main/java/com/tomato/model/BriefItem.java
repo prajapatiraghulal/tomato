@@ -2,17 +2,17 @@ package com.tomato.model;
 
 
 public class BriefItem {
-    private String itemId;
+    private long itemId;
     private long quantity;
     private String itemName;
     private String imageUrl;
     private float price;
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 

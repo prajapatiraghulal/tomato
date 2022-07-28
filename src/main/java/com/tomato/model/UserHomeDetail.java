@@ -1,14 +1,14 @@
 package com.tomato.model;
 
 public class UserHomeDetail {
-    private String userId;
+    private long userId;
     private String name;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

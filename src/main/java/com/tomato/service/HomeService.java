@@ -18,7 +18,7 @@ public class HomeService {
     @Autowired
     UserRepository userRepository;
 
-    public HomePageResponse homePage(String userId) {
+    public HomePageResponse homePage(long userId) {
         List<Restaurant> allRestaurants = restaurantRepository.findAll();
         User user = userRepository.findByUserId(userId);
 

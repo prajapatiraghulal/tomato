@@ -10,18 +10,18 @@ import javax.persistence.Id;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String orderId;
+    private long orderId;
     private String userAddress;
-    private String restaurantId;
+    private long restaurantId;
     private String gstNumber;
     private long timestamp;
     private CartDetail cartDetail;
 
-    public String getOrderId() {
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -33,11 +33,11 @@ public class Order {
         this.userAddress = userAddress;
     }
 
-    public String getRestaurantId() {
+    public long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(long restaurantId) {
         this.restaurantId = restaurantId;
     }
 

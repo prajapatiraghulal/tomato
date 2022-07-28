@@ -31,7 +31,7 @@ public class User{
 
     @Column
     @NotNull
-    private  long role;
+    private  long userType;
 
     @Column
     @NotNull
@@ -86,11 +86,11 @@ public class User{
     }
 
     public long getUserType() {
-        return role;
+        return userType;
     }
 
     public void setUserType(long userType) {
-        this.role = userType;
+        this.userType = userType;
     }
 
     public long getWalletAmount() {

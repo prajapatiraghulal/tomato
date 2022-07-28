@@ -1,14 +1,14 @@
 package com.tomato.model;
 
 public class CartItem {
-    private String itemId;
+    private long itemId;
     private long quantity;
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 

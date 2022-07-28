@@ -5,15 +5,15 @@ import java.util.List;
 
 
 public class CartDetail {
-    private String userId;
+    private long userId;
     private float totalAmount;
     private List<BriefItem> briefItemList;
 
-    public String getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

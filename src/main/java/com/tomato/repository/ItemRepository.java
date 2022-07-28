@@ -5,9 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface ItemRepository extends MongoRepository<Item,String> {
-    Item findByItemId(String itemId);
+public interface ItemRepository extends MongoRepository<Item,Long> {
+    Item findByItemId(long itemId);
     Item findByName(String name);
 
-    List<Item> findAllByrestaurantId(String restaurantId);
+    List<Item> findAllByrestaurantId(long restaurantId);
 }

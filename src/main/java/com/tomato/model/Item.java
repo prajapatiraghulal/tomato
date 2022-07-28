@@ -11,20 +11,20 @@ import javax.persistence.Id;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String itemId;
+    private long itemId;
     private String name;
     private String description;
     private long offer;
-    private String restaurantId;
+    private long restaurantId;
     private String imageUrl;
     private float price;
     private float rating;
 
-    public String getItemId() {
+    public long getItemId() {
         return itemId;
     }
 
-    public void setItemId(String itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
 
@@ -52,11 +52,11 @@ public class Item {
         this.offer = offer;
     }
 
-    public String getRestaurantId() {
+    public long getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(String restaurantId) {
+    public void setRestaurantId(long restaurantId) {
         this.restaurantId = restaurantId;
     }
 
