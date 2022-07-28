@@ -8,22 +8,22 @@ import java.util.List;
 @Document
 public class OrderHistory {
     @Id
-    private long userId;
-    private List<String> orderIdList;
+    private long id;
+    private List<Long> orderIdList;
 
     public long getUserId() {
-        return userId;
+        return id;
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.id = userId;
     }
 
-    public List<String> getOrderIdList() {
+    public List<Long> getOrderIdList() {
         return orderIdList;
     }
 
-    public void setOrderIdList(List<String> orderIdList) {
+    public void setOrderIdList(List<Long> orderIdList) {
         this.orderIdList = orderIdList;
     }
 }

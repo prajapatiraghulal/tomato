@@ -18,8 +18,13 @@ public class CartService {
     @Autowired
     ItemRepository itemRepository;
     public AddToCartResponse addToCart(CartRequest cartRequest){
-
         AddToCartResponse addToCartResponse = new AddToCartResponse();
+        if(cartRequest.getUserId()<=0 || cartRequest.getItemId()<=0 || cartRequest.getQuantity()<0){
+            addToCartResponse.setStatus(false);
+            addToCartResponse.setMessage("User and their cart not found");
+            return addToCartResponse;
+        }
+
         Cart userCart = cartRepository.findById(cartRequest.getUserId());
         if(userCart == null){
             addToCartResponse.setStatus(false);
@@ -72,7 +77,11 @@ public class CartService {
     public RemoveFromCartResponse removeFromCart(CartRequest cartRequest){
         RemoveFromCartResponse removeFromCartResponse = new RemoveFromCartResponse();
         Cart userCart = cartRepository.findById(cartRequest.getUserId());
-
+        if(userCart == null){
+            removeFromCartResponse.setStatus(false);
+            removeFromCartResponse.setMessage("cart does not exits");
+            return removeFromCartResponse;
+        }
         if(userCart.getCartItems().size() == 0){
             removeFromCartResponse.setStatus(false);
             removeFromCartResponse.setMessage("No items to remove");

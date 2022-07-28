@@ -30,7 +30,10 @@ public class CartController {
     }
 
     @PostMapping(value = "/additem", produces = "application/json", consumes = "application/json")
-    public void removeFromCart(@RequestBody Item item){
-        itemRepository.save(item);
+    public boolean removeFromCart(@RequestBody Item item){
+        if(itemRepository.save(item)!=null){
+            return true;
+        }
+        return false;
     }
 }
