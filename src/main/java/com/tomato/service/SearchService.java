@@ -22,7 +22,7 @@ public class SearchService {
     public RestaurantDetail searchRestaurant(String name) {
         Restaurant restaurant = restaurantRepository.findByName(name);
 
-        List<Item> menuItems = itemRepository.findAllByrestaurantId(restaurant.getId());
+        List<Item> menuItems = itemRepository.findAllByRestaurantId(restaurant.getId());
 
         RestaurantDetail restaurantDetail = new RestaurantDetail();
 
