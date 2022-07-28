@@ -1,9 +1,7 @@
 package com.tomato.service;
 
-import com.tomato.model.LoginRequest;
-import com.tomato.model.LoginResponse;
-import com.tomato.model.SignupResponse;
-import com.tomato.model.User;
+import com.tomato.model.*;
+import com.tomato.repository.LoginRepository;
 import com.tomato.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,6 +13,9 @@ public class UserService {
     String pepper = "tomato1234";
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    LoginRepository loginRepository;
 
     public LoginResponse authenticate(LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
@@ -39,6 +40,22 @@ public class UserService {
             }
         }
         return loginResponse;
+    }
+    public void loginEntry(LoginRequest loginRequest){
+        LoginActivity loginActivity = new LoginActivity();
+        loginActivity.setLoginToken(loginRequest.getEmail());
+        User currentUser = userRepository.findByEmail(loginRequest.getEmail());
+        if(currentUser!=null)
+        {
+            loginActivity.setUserId(currentUser.getUserId());
+        }
+        loginRepository.save(loginActivity);
+    }
+
+    public void deleteToken(TokenRequest tokenRequest){
+        LoginActivity loginActivity = new LoginActivity();
+        loginActivity = loginRepository.findByLoginToken(loginActivity.getLoginToken());
+        loginRepository.deleteById(loginActivity.getTokenId());
     }
     public SignupResponse register(User user){
 
