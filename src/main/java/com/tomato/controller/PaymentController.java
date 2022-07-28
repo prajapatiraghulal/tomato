@@ -13,7 +13,7 @@ public class PaymentController {
 @Autowired
 PaymentService paymentService;
     @PostMapping(value = "/payment",consumes ="application/json",produces = "application/json")
-    boolean payment(@RequestBody PriceDetail priceDetail){
+    public boolean payment(@RequestBody PriceDetail priceDetail){
         return paymentService.makePayment(priceDetail);
     }
 }

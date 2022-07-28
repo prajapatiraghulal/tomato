@@ -23,11 +23,14 @@ public class OrderService {
     public PriceDetail getPriceDetail(OrderInput orderInput){
         PriceDetail priceDetail=new PriceDetail();
         Cart myCart=cartRepository.findById(orderInput.getUserId());
+        if(myCart==null){
+            return null;
+        }
         List<CartItem> cartItems=myCart.getCartItems();
         float totalPrice = (float)0.0;
         for(int i = 0; i < cartItems.size(); i++){
             Item item=itemRepository.findById(cartItems.get(i).getItemId());
-            totalPrice+=item.getPrice();
+            totalPrice+=(item.getPrice()*cartItems.get(i).getQuantity());
         }
         Item item=itemRepository.findById(cartItems.get(0).getItemId());
         long restaurantId=item.getRestaurantId();
