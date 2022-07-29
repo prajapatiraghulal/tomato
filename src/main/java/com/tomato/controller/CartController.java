@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class CartController {
     @Autowired
     CartService cartService;
@@ -30,7 +31,10 @@ public class CartController {
     }
 
     @PostMapping(value = "/additem", produces = "application/json", consumes = "application/json")
-    public void removeFromCart(@RequestBody Item item){
-        itemRepository.save(item);
+    public boolean removeFromCart(@RequestBody Item item){
+        if(itemRepository.save(item)!=null){
+            return true;
+        }
+        return false;
     }
 }

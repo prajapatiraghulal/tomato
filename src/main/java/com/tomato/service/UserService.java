@@ -3,12 +3,15 @@ package com.tomato.service;
 import com.tomato.model.*;
 import com.tomato.repository.LoginRepository;
 import com.tomato.repository.CartRepository;
+import com.tomato.repository.OrderHistoryRepository;
 import com.tomato.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -18,14 +21,15 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     CartRepository cartRepository;
-
+    @Autowired
+    OrderHistoryRepository orderHistoryRepository;
     @Autowired
     LoginRepository loginRepository;
 
     public LoginResponse authenticate(LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
         LoginResponse loginResponse = new LoginResponse();
-        if(user == null)
+        if(user ==null)
         {
             loginResponse.setStatus(false);
             loginResponse.setMessage("User not found");
@@ -37,6 +41,8 @@ public class UserService {
             {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
+                loginResponse.setUserId(user.getUserId());
+                loginResponse.setUserType((int)user.getUserType());
             }
             else
             {
@@ -90,6 +96,17 @@ public class UserService {
                     cart.setId(newUser.getUserId());
                     cart.setCartItems(Collections.emptyList());
                     Cart newCart = cartRepository.save(cart);
+                    OrderHistory orderHistory = new OrderHistory();
+                    orderHistory.setUserId(newUser.getUserId());
+                    orderHistory.setOrderIdList(new ArrayList<>());
+                    OrderHistory newOrderHistory = orderHistoryRepository.save(orderHistory);
+                    if(newOrderHistory==null){
+                        cartRepository.delete(newCart);
+                        userRepository.delete(newUser);
+                        signupResponse.setMessage("Signup failed");
+                        signupResponse.setStatus(false);
+                        return signupResponse;
+                    }
                     if(newCart!=null){
                         signupResponse.setMessage("Signup successful");
                         signupResponse.setStatus(true);

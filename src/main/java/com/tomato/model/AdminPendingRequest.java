@@ -5,6 +5,7 @@ import javax.persistence.Id;
 
 @Document("AdminPendingRequests")
 public class AdminPendingRequest {
+
     @Id
     private long id;
 

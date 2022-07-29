@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderHistoryRepository extends MongoRepository<OrderHistory, Long> {
-    public OrderHistory findByUserId(long userId);
+    public OrderHistory findById(long id);
 }
