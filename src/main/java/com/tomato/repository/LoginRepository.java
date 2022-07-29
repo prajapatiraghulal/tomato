@@ -10,4 +10,5 @@ public interface LoginRepository extends JpaRepository<LoginActivity,Long> {
     public LoginActivity findByTokenId(long tokenId);
     public LoginActivity findByLoginToken(String loginToken);
     public LoginActivity findByUserId(long userId);
+    public void deleteByUserId(long id);
 }

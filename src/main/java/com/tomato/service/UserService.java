@@ -29,12 +29,10 @@ public class UserService {
     public LoginResponse authenticate(LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
         LoginResponse loginResponse = new LoginResponse();
-<<<<<<< HEAD
+
         LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
         if(user == null)
-=======
-        if(user ==null)
->>>>>>> 85d1f2885f34693206fab93c1f29b8834435159f
+
         {
             loginResponse.setStatus(false);
             loginResponse.setMessage("User not found");
@@ -46,12 +44,12 @@ public class UserService {
             {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
-<<<<<<< HEAD
-                loginResponse.setLoginToken(loginResponse.getLoginToken());
-=======
+                LoginActivity loginActivity1 = loginRepository.findByUserId(user.getUserId());
+                loginResponse.setLoginToken(loginActivity1.getLoginToken());
+
                 loginResponse.setUserId(user.getUserId());
                 loginResponse.setUserType((int)user.getUserType());
->>>>>>> 85d1f2885f34693206fab93c1f29b8834435159f
+
             }
             else
             {
@@ -64,7 +62,9 @@ public class UserService {
   
     public void loginEntry(LoginRequest loginRequest){
         LoginActivity loginActivity = new LoginActivity();
-        loginActivity.setLoginToken(loginRequest.getEmail());
+        loginActivity.setTokenId((long)Math.random()*100000);
+        String randomString = BCrypt.hashpw(loginRequest.getEmail(),"abcd");
+        loginActivity.setLoginToken(randomString);
         User currentUser = userRepository.findByEmail(loginRequest.getEmail());
         if(currentUser!=null)
         {
@@ -73,6 +73,10 @@ public class UserService {
         loginRepository.save(loginActivity);
     }
 
+    public void deleteEntry(LoginRequest loginRequest){
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+        loginRepository.deleteByUserId(user.getUserId());
+    }
     public void deleteToken(TokenRequest tokenRequest){
         LoginActivity loginActivity = new LoginActivity();
         loginActivity = loginRepository.findByLoginToken(loginActivity.getLoginToken());
