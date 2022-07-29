@@ -41,6 +41,8 @@ public class UserService {
             {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
+                loginResponse.setUserId(user.getUserId());
+                loginResponse.setUserType((int)user.getUserType());
             }
             else
             {

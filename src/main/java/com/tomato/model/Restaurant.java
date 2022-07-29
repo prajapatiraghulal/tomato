@@ -1,7 +1,10 @@
 package com.tomato.model;
 
+import com.sun.javafx.geom.transform.Identity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.List;
 
@@ -16,7 +19,9 @@ public class Restaurant {
     private String description;
     private String address;
     private String imageUrl;
-   // @Transient
+
+
+    // @Transient
     private List<Long> itemIds;
 
     public long getId() {
