@@ -7,6 +7,7 @@ import javax.persistence.Id;
 @Entity
 public class LoginActivity {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long tokenId;
     private String loginToken;
     private long userId;

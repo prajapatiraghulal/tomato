@@ -62,9 +62,8 @@ public class UserService {
   
     public void loginEntry(LoginRequest loginRequest){
         LoginActivity loginActivity = new LoginActivity();
-        loginActivity.setTokenId((long)Math.random()*100000);
-        String randomString = BCrypt.hashpw(loginRequest.getEmail(),"abcd");
-        loginActivity.setLoginToken(randomString);
+        //String randomString = BCrypt.hashpw(loginRequest.getEmail(),"abcd");
+        loginActivity.setLoginToken(loginRequest.getEmail());
         User currentUser = userRepository.findByEmail(loginRequest.getEmail());
         if(currentUser!=null)
         {
