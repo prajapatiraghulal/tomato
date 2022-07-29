@@ -1,9 +1,5 @@
 package com.tomato.model;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
-
-
 public class OrderInput {
     private long userId;
     private String address;
