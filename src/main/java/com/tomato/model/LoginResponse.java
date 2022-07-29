@@ -3,6 +3,15 @@ package com.tomato.model;
 public class LoginResponse {
     private boolean status;
     private String message;
+    private String loginToken;
+
+    public String getLoginToken() {
+        return loginToken;
+    }
+
+    public void setLoginToken(String loginToken) {
+        this.loginToken = loginToken;
+    }
 
     private long userId;
 

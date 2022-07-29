@@ -29,7 +29,12 @@ public class UserService {
     public LoginResponse authenticate(LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
         LoginResponse loginResponse = new LoginResponse();
+<<<<<<< HEAD
+        LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
+        if(user == null)
+=======
         if(user ==null)
+>>>>>>> 85d1f2885f34693206fab93c1f29b8834435159f
         {
             loginResponse.setStatus(false);
             loginResponse.setMessage("User not found");
@@ -41,8 +46,12 @@ public class UserService {
             {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
+<<<<<<< HEAD
+                loginResponse.setLoginToken(loginResponse.getLoginToken());
+=======
                 loginResponse.setUserId(user.getUserId());
                 loginResponse.setUserType((int)user.getUserType());
+>>>>>>> 85d1f2885f34693206fab93c1f29b8834435159f
             }
             else
             {
@@ -110,6 +119,8 @@ public class UserService {
                     if(newCart!=null){
                         signupResponse.setMessage("Signup successful");
                         signupResponse.setStatus(true);
+                        signupResponse.setUserId(user.getUserId());
+                        signupResponse.setUserType(user.getUserType());
                         return signupResponse;
                     }
                     else{
@@ -122,6 +133,14 @@ public class UserService {
                 else{
                     signupResponse.setMessage("Signup unsuccessful!!! User Not Saved in DB");
                     signupResponse.setStatus(false);
+                    signupResponse.setUserId(user.getUserId());
+                    signupResponse.setUserType(user.getUserType());
+                    LoginRequest loginRequest = new LoginRequest();
+                    loginRequest.setEmail(user.getEmail());
+                    loginRequest.setPassword(user.getPassword());
+                    loginEntry(loginRequest);
+                    LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
+                    signupResponse.setLoginToken(loginActivity.getLoginToken());
                     return signupResponse;
                 }
             }
