@@ -28,14 +28,15 @@ public class UserController {
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
         try{
+            userService.loginEntry(loginRequest);
             LoginResponse loginResponse = userService.authenticate(loginRequest);
             if(loginResponse.isStatus())
             {
-                userService.loginEntry(loginRequest);
                 return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.OK);
             }
             else
             {
+                userService.deleteEntry(loginRequest);
                 return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e){
