@@ -28,7 +28,6 @@ public class UserController {
     @PostMapping(value = "/login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest){
         try{
-            userService.loginEntry(loginRequest);
             LoginResponse loginResponse = userService.authenticate(loginRequest);
             if(loginResponse.isStatus())
             {
@@ -36,7 +35,6 @@ public class UserController {
             }
             else
             {
-                userService.deleteEntry(loginRequest);
                 return new ResponseEntity<LoginResponse>(loginResponse, HttpStatus.BAD_REQUEST);
             }
         }catch (Exception e){
@@ -51,7 +49,7 @@ public class UserController {
     }
     @PostMapping("/logout")
     public String logout(@RequestBody TokenRequest tokenRequest) {
-        userService.deleteToken(tokenRequest);
+        userService.deleteToken(tokenRequest.getLoginToken());
         return "home page";
     }
 }

@@ -1,11 +1,13 @@
 package com.tomato.service;
 
+import com.sun.istack.NotNull;
 import com.tomato.model.*;
 import com.tomato.repository.LoginRepository;
 import com.tomato.repository.CartRepository;
 import com.tomato.repository.OrderHistoryRepository;
 import com.tomato.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.DateOperators;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +28,12 @@ public class UserService {
     @Autowired
     LoginRepository loginRepository;
 
-    public LoginResponse authenticate(LoginRequest loginRequest){
+    public LoginResponse authenticate(@NotNull LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
         LoginResponse loginResponse = new LoginResponse();
 
-        LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
-        if(user == null)
-
-        {
+        //LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
+        if(user == null) {
             loginResponse.setStatus(false);
             loginResponse.setMessage("User not found");
         }
@@ -45,8 +45,17 @@ public class UserService {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
                 LoginActivity loginActivity1 = loginRepository.findByUserId(user.getUserId());
+                if(loginActivity1 == null){
+                    loginActivity1 = new LoginActivity();
+                    loginActivity1.setLoginToken(String.valueOf((long)(Math.random()*100000)));
+                    loginActivity1.setUserId(user.getUserId());
+                    loginActivity1.setTtl(System.currentTimeMillis()+10000);
+                    loginRepository.save(loginActivity1);
+                }else{
+                    loginActivity1.setTtl(System.currentTimeMillis()+10000);
+                    loginRepository.save(loginActivity1);
+                }
                 loginResponse.setLoginToken(loginActivity1.getLoginToken());
-
                 loginResponse.setUserId(user.getUserId());
                 loginResponse.setUserType((int)user.getUserType());
 
@@ -60,30 +69,31 @@ public class UserService {
         return loginResponse;
     }
   
-    public void loginEntry(LoginRequest loginRequest){
-        LoginActivity loginActivity = new LoginActivity();
-        //String randomString = BCrypt.hashpw(loginRequest.getEmail(),"abcd");
-        loginActivity.setLoginToken(loginRequest.getEmail());
-        loginActivity.setTokenId((long)(Math.random()*100000));
-        User currentUser = userRepository.findByEmail(loginRequest.getEmail());
-        if(currentUser!=null)
-        {
-            loginActivity.setUserId(currentUser.getUserId());
+    public boolean checkLoginToken(String token){
+        LoginActivity loginActivity = loginRepository.findByLoginToken(token);
+        if(loginActivity!= null){
+            if(loginActivity.getTtl() < System.currentTimeMillis()){
+                loginRepository.delete(loginActivity);
+                return false;
+            }
+            loginActivity.setTtl(System.currentTimeMillis()+10000);
+            loginRepository.save(loginActivity);
+            return true;
         }
-        loginRepository.save(loginActivity);
+        return false;
     }
 
-    public void deleteEntry(LoginRequest loginRequest){
-        User user = userRepository.findByEmail(loginRequest.getEmail());
-        loginRepository.deleteByUserId(user.getUserId());
+    public boolean deleteToken(String token){
+        LoginActivity loginActivity = loginRepository.findByLoginToken(token);
+        if(loginActivity == null){
+
+        }else{
+            loginRepository.delete(loginActivity);
+        }
+        return  true;
     }
-    public void deleteToken(TokenRequest tokenRequest){
-        LoginActivity loginActivity = new LoginActivity();
-        loginActivity = loginRepository.findByLoginToken(loginActivity.getLoginToken());
-        loginRepository.deleteById(loginActivity.getTokenId());
-    }
-  
-    public SignupResponse register(User user){
+
+    public SignupResponse register(@NotNull User user){
         SignupResponse signupResponse = new SignupResponse();
         try  {
             if (user.getUserType() == 2) {
@@ -98,6 +108,7 @@ public class UserService {
                 return signupResponse;
             } else{
                 String salt = BCrypt.gensalt();
+                String oldPassword = user.getPassword();
                 String hashedPassword = BCrypt.hashpw(user.getPassword()+pepper,salt);
                 user.setPassword(hashedPassword);
                 user.setSalt(salt);
@@ -121,10 +132,13 @@ public class UserService {
                         return signupResponse;
                     }
                     if(newCart!=null){
+                        LoginRequest loginRequest = new LoginRequest(newUser.getEmail(),oldPassword );
+                        LoginResponse loginResponse = this.authenticate(loginRequest);
                         signupResponse.setMessage("Signup successful");
                         signupResponse.setStatus(true);
-                        signupResponse.setUserId(user.getUserId());
+                        signupResponse.setUserId(newUser.getUserId());
                         signupResponse.setUserType(user.getUserType());
+                        signupResponse.setLoginToken(loginResponse.getLoginToken());
                         return signupResponse;
                     }
                     else{
@@ -137,12 +151,7 @@ public class UserService {
                 else{
                     signupResponse.setMessage("Signup unsuccessful!!! User Not Saved in DB");
                     signupResponse.setStatus(false);
-                    signupResponse.setUserId(user.getUserId());
-                    signupResponse.setUserType(user.getUserType());
-                    LoginRequest loginRequest = new LoginRequest();
-                    loginRequest.setEmail(user.getEmail());
-                    loginRequest.setPassword(user.getPassword());
-                    loginEntry(loginRequest);
+                    
                     LoginActivity loginActivity = loginRepository.findByUserId(user.getUserId());
                     signupResponse.setLoginToken(loginActivity.getLoginToken());
                     return signupResponse;

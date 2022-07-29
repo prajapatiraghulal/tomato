@@ -7,10 +7,19 @@ import javax.persistence.Id;
 @Entity
 public class LoginActivity {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long tokenId;
     private String loginToken;
     private long userId;
+    private long ttl;
+
+    public long getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(long ttl) {
+        this.ttl = ttl;
+    }
 
     public Long getUserId() {
         return userId;
