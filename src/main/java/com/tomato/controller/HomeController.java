@@ -6,14 +6,14 @@ import com.tomato.repository.RestaurantRepository;
 import com.tomato.repository.UserRepository;
 import com.tomato.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class HomeController {
 
     @Autowired
