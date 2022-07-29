@@ -1,10 +1,9 @@
 package com.tomato.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import javax.persistence.Id;
 
-@Document
+@Document("AdminPendingRequests")
 public class AdminPendingRequest {
 
     @Id
