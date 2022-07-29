@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @CrossOrigin
 public class UserController {

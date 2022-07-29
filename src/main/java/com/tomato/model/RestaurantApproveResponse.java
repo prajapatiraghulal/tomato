@@ -1,28 +1,8 @@
 package com.tomato.model;
 
-public class LoginResponse {
+public class RestaurantApproveResponse {
     private boolean status;
     private String message;
-
-    private long userId;
-
-    private int userType;
-
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-    public int getUserType() {
-        return userType;
-    }
-
-    public void setUserType(int userType) {
-        this.userType = userType;
-    }
 
     public boolean isStatus() {
         return status;

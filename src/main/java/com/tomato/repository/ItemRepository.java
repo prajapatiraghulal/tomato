@@ -9,5 +9,7 @@ public interface ItemRepository extends MongoRepository<Item,Long> {
     Item findById(long id);
     Item findByName(String name);
 
-    List<Item> findAllByRestaurantId(long restaurantId);
+    List<Item> findAllById(long id);
+
+    List<Item> findAllByRestaurantId(long id);
 }

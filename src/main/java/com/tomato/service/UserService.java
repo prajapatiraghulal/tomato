@@ -29,7 +29,7 @@ public class UserService {
     public LoginResponse authenticate(LoginRequest loginRequest){
         User user = userRepository.findByEmail(loginRequest.getEmail());
         LoginResponse loginResponse = new LoginResponse();
-        if(user == null)
+        if(user ==null)
         {
             loginResponse.setStatus(false);
             loginResponse.setMessage("User not found");
@@ -41,6 +41,8 @@ public class UserService {
             {
                 loginResponse.setStatus(true);
                 loginResponse.setMessage("Login Successful");
+                loginResponse.setUserId(user.getUserId());
+                loginResponse.setUserType((int)user.getUserType());
             }
             else
             {
