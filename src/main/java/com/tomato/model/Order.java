@@ -12,10 +12,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
     private String userAddress;
-    private long restaurantId;
-    private String gstNumber;
+    private String restaurantName;
+    private long gstNumber;
     private long timestamp;
     private CartDetail cartDetail;
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
 
     public long getOrderId() {
         return orderId;
@@ -33,19 +41,11 @@ public class Order {
         this.userAddress = userAddress;
     }
 
-    public long getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public String getGstNumber() {
+    public long getGstNumber() {
         return gstNumber;
     }
 
-    public void setGstNumber(String gstNumber) {
+    public void setGstNumber(long gstNumber) {
         this.gstNumber = gstNumber;
     }
 

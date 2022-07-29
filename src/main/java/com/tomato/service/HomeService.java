@@ -22,9 +22,17 @@ public class HomeService {
         List<Restaurant> allRestaurants = restaurantRepository.findAll();
         User user = userRepository.findByUserId(userId);
 
+        List<Restaurant> allRestaurantsApproved = new ArrayList<>();
+
+        for(Restaurant res : allRestaurants) {
+            if(res.getStatus() == 1) {
+                allRestaurantsApproved.add(res);
+            }
+        }
+
         //Populate RestaurantHomeDetail
         List<RestaurantHomeDetail> restaurantHomeDetails = new ArrayList<>();
-        for(Restaurant restaurant : allRestaurants) {
+        for(Restaurant restaurant : allRestaurantsApproved) {
             RestaurantHomeDetail restaurantHomeDetail = new RestaurantHomeDetail();
            restaurantHomeDetail.setRestaurantId(restaurant.getId());
            restaurantHomeDetail.setName(restaurant.getName());

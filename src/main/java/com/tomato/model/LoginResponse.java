@@ -13,6 +13,26 @@ public class LoginResponse {
         this.loginToken = loginToken;
     }
 
+    private long userId;
+
+    private int userType;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
     public boolean isStatus() {
         return status;
     }
