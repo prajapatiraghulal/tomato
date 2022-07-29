@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface LoginRepository extends JpaRepository<LoginActivity,Long> {
     public LoginActivity findByTokenId(long tokenId);
     public LoginActivity findByLoginToken(String loginToken);
+    public LoginActivity findByUserId(long userId);
 }
