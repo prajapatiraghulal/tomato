@@ -16,7 +16,9 @@ public class Restaurant {
     private String description;
     private String address;
     private String imageUrl;
-   // @Transient
+
+
+    // @Transient
     private List<Long> itemIds;
 
     public long getId() {
